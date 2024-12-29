@@ -1,0 +1,33 @@
+# This is not used, but it's here for reference
+
+cmake_minimum_required(VERSION 3.10)
+project(dart_ffi_mac_ui C OBJC)
+
+add_library(dart_ffi_mac_ui SHARED
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/dart_ffi_mac_ui.m
+)
+
+target_include_directories(dart_ffi_mac_ui PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+if(APPLE)
+    set_source_files_properties(
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/dart_ffi_mac_ui.m
+        PROPERTIES
+        LANGUAGE OBJC
+    )
+    
+    target_link_libraries(dart_ffi_mac_ui PRIVATE
+        "-framework Foundation"
+    )
+endif()
+
+set_target_properties(dart_ffi_mac_ui PROPERTIES
+    C_STANDARD 11
+    C_STANDARD_REQUIRED ON
+    PREFIX ""
+    SUFFIX ".dylib"
+)
+
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
